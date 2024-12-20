@@ -49,6 +49,7 @@ SHOW GRANTS FOR 'navi'@'localhost';
 -- b) Crea un usuari anomenat skullkid@localhost amb la sintaxi CREATE 
 -- USER amb permisos de només connexió i identificat amb contrasenya. 
 -- Comprova-ho amb SHOW GRANTS FOR skullkid@localhost;.
+CREATE USER skullkid@localhost;
 SELECT user,host FROM mysql.user;
 SHOW GRANTS FOR 'skullkid'@'localhost';
 
@@ -85,3 +86,16 @@ SHOW GRANTS FOR 'navi'@'localhost';
 -- // (3) Comprovació del grant option des de root
 -- SHOW GRANTS FOR sonic;
 
+-- e) Connecta't amb l'usuari navi i dona permisos de selecció a skullkid per 
+-- a la taula hyrule.mascares, comprova que així sigui.
+
+-- f) Treu els permisos de selecció a skullkid sobre la taula hyrule.herois.
+
+-- g) Connecta't com a root i elimina tots els permisos que has donat a navi i 
+-- skullkid.
+
+-- h) Dona a skullkid els permisos de SELECT sobre les columnes id i nom de 
+-- la taula armes de la BD hyrule.
+
+-- i) Connecta't amb skullkid i executa la query SELECT * FROM hyrule.armes. 
+-- Què succeeix?
