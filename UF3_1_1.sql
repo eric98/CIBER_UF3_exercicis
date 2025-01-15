@@ -76,3 +76,21 @@ GRANT SELECT, INSERT, UPDATE ON hyrule.* TO navi@localhost WITH GRANT OPTION;
 SHOW GRANTS FOR navi@localhost;
 
 -- >> (2) Comprovació dels permisos des del propi usuari
+-- SELECT * FROM hyrule.herois;
+-- INSERT INTO hyrule.mascares VALUES ('goron', 'groga');
+-- UPDATE hyrule.armes SET poder='60' WHERE id=1;
+-- *Comprovació del GRANT OPTION en el següent exercici
+
+-- e) Connecta't amb l'usuari navi i dona permisos de selecció a skullkid per a la taula hyrule.mascares, comprova que així sigui.
+-- Preparació: mysql -u skullkid -p
+GRANT SELECT ON hyrule.mascares TO skullkid@localhost;
+
+-- >> (1) Comprovació dels permisos assignats (des de root)
+SHOW GRANTS FOR skullkid@localhost;
+
+-- >> (2) Comprovació dels permisos des del propi usuari
+-- SELECT * FROM hyrule.mascares;
+
+-- f) Treu els permisos de selecció a skullkid sobre la taula hyrule.herois.
+
+-- >> (2) Comprovació dels permisos des del propi usuari
