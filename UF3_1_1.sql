@@ -93,8 +93,14 @@ SHOW GRANTS FOR skullkid@localhost;
 
 -- f) Treu els permisos de selecció a skullkid sobre la taula hyrule.herois.
 REVOKE SELECT ON hyrule.herois FROM skullkid@localhost;
-REVOKE SELECT ON hyrule.mascares FROM skullkid@localhost;
 
 -- >> (2) Comprovació dels permisos des del propi usuari
--- SELECT * FROM hyrule.mascares;
 -- SELECT * FROM hyrule.herois;
+
+-- g) Connecta't com a root i elimina tots els permisos que has donat a navi i skullkid.
+
+-- h) Dona a skullkid els permisos de SELECT sobre les columnes id i nom de la taula armes de la BD hyrule.
+
+-- i) Connecta't amb skullkid i executa la query SELECT * FROM hyrule.armes. Què succeeix?
+
+-- j) Esborra l'usuari navi. Com ha quedat la BD a nivell d'usuaris (taula mysql.user) i de permisos (taula information_schema.user_privileges)?
