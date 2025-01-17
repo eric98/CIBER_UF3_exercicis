@@ -98,9 +98,35 @@ REVOKE SELECT ON hyrule.herois FROM skullkid@localhost;
 -- SELECT * FROM hyrule.herois;
 
 -- g) Connecta't com a root i elimina tots els permisos que has donat a navi i skullkid.
+REVOKE SELECT, INSERT, UPDATE, GRANT OPTION ON hyrule.* FROM navi@localhost;
+REVOKE SELECT ON hyrule.mascares FROM skullkid@localhost;
+
+-- >> (1) Comprovació des de root
+SHOW GRANTS FOR navi@localhost;
+SHOW GRANTS FOR skullkid@localhost;
+
+-- >> (2) Comprovació des de cada usuari
+-- Connectat des de navi@localhost
+-- 	SELECT * FROM hyrule.armes;
+--	TODO: comprovar INSERT, UPDATE, GRANT OPTION
+-- Connectat des de skullkid@localhost
+-- 	SELECT * FROM hyrule.mascares;
 
 -- h) Dona a skullkid els permisos de SELECT sobre les columnes id i nom de la taula armes de la BD hyrule.
+GRANT SELECT(id,nom) ON hyrule.armes TO skullkid@localhost;
+
+-- > (1) Comprovaió des de root
+SHOW GRANTS FOR skullkid@localhost;
+
+-- > (2) Comprovació des de l'usuari
+-- SELECT id,nom FROM hyrule.armes; -- OK
+-- SELECT * FROM hyrule.armes; -- ERROR
 
 -- i) Connecta't amb skullkid i executa la query SELECT * FROM hyrule.armes. Què succeeix?
+-- Error: La comanda es denega perquè skullkid té permisos de SELECT solament
+-- als camps id i nom de hyrule.armes, no a tots els camps.
 
 -- j) Esborra l'usuari navi. Com ha quedat la BD a nivell d'usuaris (taula mysql.user) i de permisos (taula information_schema.user_privileges)?
+DROP USER navi@localhost;
+SELECT user,host FROM mysql.user;
+SELECT * FROM information_schema.user_privileges;
