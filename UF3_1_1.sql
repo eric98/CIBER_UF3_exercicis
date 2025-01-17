@@ -92,5 +92,9 @@ SHOW GRANTS FOR skullkid@localhost;
 -- SELECT * FROM hyrule.mascares;
 
 -- f) Treu els permisos de selecció a skullkid sobre la taula hyrule.herois.
+REVOKE SELECT ON hyrule.herois FROM skullkid@localhost;
+REVOKE SELECT ON hyrule.mascares FROM skullkid@localhost;
 
 -- >> (2) Comprovació dels permisos des del propi usuari
+-- SELECT * FROM hyrule.mascares;
+-- SELECT * FROM hyrule.herois;
