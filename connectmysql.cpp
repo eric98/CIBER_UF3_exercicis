@@ -1,92 +1,56 @@
-/* Copyright 2008, 2010, Oracle and/or its affiliates.
-
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; version 2 of the License.
-
-There are special exceptions to the terms and conditions of the GPL
-as it is applied to this software. View the full text of the
-exception in file EXCEPTIONS-CONNECTOR-C++ in the directory of this
-software distribution.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
-*/
-
-/* Standard C++ includes */
+// #0.1 Include de llibreries de c++
 #include <stdlib.h>
 #include <iostream>
 
-/*
-  Include directly the different
-  headers from cppconn/ and mysql_driver.h + mysql_util.h
-  (and mysql_connection.h). This will reduce your build time!
-*/
+// #0.2 Include de les llibreries que es connectem amb MySQL
 #include "mysql_connection.h"
-
 #include <cppconn/driver.h>
 #include <cppconn/exception.h>
 #include <cppconn/resultset.h>
 #include <cppconn/statement.h>
 
-using namespace std;
-
 int main(void)
 {
-cout << endl;
+	// #1 Es creen les variables necessàries per a connectar-se a MySQL
+	sql::Driver *driver;
+	sql::Connection *con;
+	sql::Statement *stmt;
+	sql::ResultSet *res;
 
-  sql::Driver *driver;
-  sql::Connection *con;
-  sql::Statement *stmt;
-  sql::ResultSet *res;
+	// #2 Es crea la connexió al SGBD amb usuari "root" i contrasenya "eric"
+	driver = get_driver_instance();
+	con = driver->connect("tcp://127.0.0.1:3306", "root", "eric");
+	
+	// #3 Ens connectem a la base de dades "test" (similar a USE test;)
+	con->setSchema("test");
 
-  /* Create a connection */
-  driver = get_driver_instance();
-  con = driver->connect("tcp://127.0.0.1:3306", username, password);
-  /* Connect to the MySQL test database */
-  con->setSchema("test");
+	// #4 Creem una transacció
+	stmt = con->createStatement();
+	
+	// #5 Executem la consulta "SELECT 'Hello World!' AS _message" i guardem el resultat a la variable res
+	res = stmt->executeQuery("SELECT 'Hello World!' AS _message");
+	
+	// #6 Consultem el contingut de la variable res
+	while (res->next()) {
 
-  stmt = con->createStatement();
-  res = stmt->executeQuery("SELECT 'Hello World!' AS _message");
-  while (res->next()) {
-    cout << "\t... MySQL replies: ";
-    /* Access column data by alias or column name */
-    cout << res->getString("_message") << endl;
-    cout << "\t... MySQL says it again: ";
-    /* Access column data by numeric offset, 1 is the first column */
-    cout << res->getString(1) << endl;
-  }
-  
-  // 1. Creació del formulari
-  std::string username;
-  std::string password;
-  
-  std::cout << "username: " << std::flush;
-  std::getline(std::cin, username);
-  
-  std::cout << "password: " << std::flush;
-  std::getline(std::cin, password);
-  
-  // 2. Generar la petició SELECT
-  // TODO
-  
-  // 3. Mostrar si s'ha connectat
-  // TODO
-  
-  
-  delete res;
-  delete stmt;
-  delete con;
+		std::cout << res->getString(1) << endl;
+		
+	}
 
+	// TODO: Escriu el formulari al lloc corresponen per a que el programa es connecti amb username i password
+	std::string username;
+	std::string password;
 
+	std::cout << "username: " << std::flush;
+	std::getline(std::cin, username);
 
-cout << endl;
+	std::cout << "password: " << std::flush;
+	std::getline(std::cin, password);
 
-return EXIT_SUCCESS;
+	// #7 Necessari per a tancar el programa correctament
+	delete res;
+	delete stmt;
+	delete con;
+
+	return EXIT_SUCCESS;
 }
