@@ -21,31 +21,37 @@ int main(void)
 	driver = get_driver_instance();
 	con = driver->connect("tcp://127.0.0.1:3306", "root", "eric");
 	
-	// #3 Ens connectem a la base de dades "test" (similar a USE test;)
-	con->setSchema("test");
+	// #3 Ens connectem a la base de dades "hyrule" (similar a USE hyrule;)
+	con->setSchema("hyrule");
 
 	// #4 Creem una transacció
 	stmt = con->createStatement();
 	
-	// #5 Executem la consulta "SELECT 'Hello World!' AS _message" i guardem el resultat a la variable res
-	res = stmt->executeQuery("SELECT 'Hello World!' AS _message");
+	// #5 Executem la consulta "SELECT nom,poder FROM armes" i guardem el resultat a la variable res
+	res = stmt->executeQuery("SELECT nom,poder FROM armes");
 	
-	// #6 Consultem el contingut de la variable res
+	// #6 Consultem el contingut de la variable res 
+	//   (cada iteració del bucle, és un registre de la taula resultat)
+	//		1a iterció: espasa mestra
+	//		2a iteració: arc
+	//		3a iteració: espasa laser
 	while (res->next()) {
 
-		std::cout << res->getString(1) << endl;
+		// #7 Consultem el valor de la columna '1' i columna '2'
+		//   i els mostrem amb un st::cout
+		std::cout << "Nom: " << res->getString(1) << "\tPoder: " << res->getInt(2) << std::endl;
 		
 	}
 
 	// TODO: Escriu el formulari al lloc corresponen per a que el programa es connecti amb username i password
-	std::string username;
+	/*std::string username;
 	std::string password;
 
 	std::cout << "username: " << std::flush;
 	std::getline(std::cin, username);
 
 	std::cout << "password: " << std::flush;
-	std::getline(std::cin, password);
+	std::getline(std::cin, password);*/
 
 	// #7 Necessari per a tancar el programa correctament
 	delete res;
