@@ -20,7 +20,7 @@ int main(void)
 	// #2 Es crea la connexió al SGBD amb usuari "root" i contrasenya "eric"
 	driver = get_driver_instance();
 	con = driver->connect("tcp://127.0.0.1:3306", "root", "eric");
-	
+
 	// #3 Ens connectem a la base de dades "formulari" (similar a USE formulari;)
 	con->setSchema("formulari");
 
@@ -52,7 +52,7 @@ int main(void)
 	bool signIn = false;
 	while (res->next()) {
 		// Com que estem executant:
-		//	SELECT * FROM users ....... 
+		//	SELECT * FROM users
 		// 	   WHERE username='${formulariUsername}'
 		// 	   AND password='${formulariPassword}'
 		//   la taula resultant serà un únic usuari amb aquest usuari i contrasenya.
