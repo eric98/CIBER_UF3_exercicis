@@ -21,7 +21,7 @@ int main(void)
 	driver = get_driver_instance();
 	con = driver->connect("tcp://127.0.0.1:3306", "root", "eric");
 	
-	// #3 Ens connectem a la base de dades "hyrule" (similar a USE hyrule;)
+	// #3 Ens connectem a la base de dades "formulari" (similar a USE formulari;)
 	con->setSchema("formulari");
 
 	// #4 Creem una transacció
@@ -51,7 +51,14 @@ int main(void)
 	//		...
 	bool signIn = false;
 	while (res->next()) {
-		// Com que estem executant SELECT * FROM users ....... WHERE
+		// Com que estem executant:
+		//	SELECT * FROM users ....... 
+		// 	   WHERE username='${formulariUsername}'
+		// 	   AND password='${formulariPassword}'
+		//   la taula resultant serà un únic usuari amb aquest usuari i contrasenya.
+		//
+		//   Per tant, si la taula té algun registre => l'usuari pot iniciar sessió
+		//             si la taula no té cap registre => no es pot iniciar sessió
 		signIn = true;
 	}
 
