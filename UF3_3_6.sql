@@ -1,9 +1,10 @@
 -- entifest --
 -- // interessants: SLEEP(1), LIKE, SUBSTRING(), POSITIION(), EXISTS(), IF(), LENGTH()
 -- Estratègia:
--- -> trobar la taula on es guarden les contrasenyes
 -- -> trobar la base de dades on es guarda la informació sensible
--- -> consultar la informació sensible
+-- -> trobar una columna sospitosa on es guarda la informació sensible
+-- -> trobar la taula on es guarda la columna sospitosa
+-- -> consultar la informació sensible (en aquest cas: contrasenya de root o admin)
 
 -- #1 Trobar el nom de la base de dades
 IF(database() LIKE 'esdeveniments', SLEEP(1), SLEEP(0)); -- -
